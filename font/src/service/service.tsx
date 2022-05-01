@@ -7,10 +7,24 @@ export async function registerUser(data) {
             'Content-Type': 'application/json',
             Accept: 'application/json'
         },
-        params: {
-            username:data.username,
-            password:data.password,
-            phone:data.phone
+        data: {
+            username: data.username,
+            password: data.password,
+            phone: data.phone
+        }
+    })
+}
+
+export async function Userlogin(data) {
+    return request('/api/login', {
+        method: 'post',
+        headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json'
+        },
+        data: {
+            username: data.username,
+            password: data.password,
         }
     })
 }

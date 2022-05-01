@@ -5,11 +5,10 @@ export default defineConfig({
     type: 'none',
   },
   proxy: {
-
     '/api': {
-      target: 'http://47.114.86.154:30011',
-      changeOrigin: true,
-      pathRewrite: { '^/api': '/api' },
+      'target': 'http://127.0.0.1:3307/',
+      'changeOrigin': true,
+      'pathRewrite': { '^/api': '/api' },
     },
   },
   routes: [

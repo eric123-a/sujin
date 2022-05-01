@@ -1,9 +1,12 @@
 import styles from './login.less'
 import { Form, Input, Button, Checkbox } from 'antd';
 import { Link } from 'umi';
+import { Userlogin } from '@/service/service'
 
 export default function login() {
-
+    function login(data) {
+          Userlogin(data)
+    }
     return (
         <div className={styles.login}>
             <Form
