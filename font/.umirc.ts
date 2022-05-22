@@ -18,6 +18,7 @@ export default defineConfig({
         { exact: true, path: '/', component: '@/pages/index/index' },
         { exact: true, path: '/login', component: '@/pages/UserPage/login/login' },
         { exact: true, path: '/register', component: '@/pages/UserPage/register/register' },
+        { exact: true, path: '/detail', component: '@/pages/detailPage/detail' },
       ],
     },
   ],
