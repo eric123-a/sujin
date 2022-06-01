@@ -97,6 +97,7 @@ export default function IndexPage() {
             />
           </TabPane>
         </Tabs>
+
       </div>
     </div>
   );

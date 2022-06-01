@@ -21,7 +21,9 @@ export default function head({ children }: BasicProps) {
             <Content style={{ padding: '0 50px' }}>
                 <div className="site-layout-content">{children}</div>
             </Content>
-            <Footer style={{ textAlign: 'center' }}>速竞 提供快速即时竞赛消息</Footer>
+            <Footer style={{ textAlign: 'center', color:'#989898' }}>速竞 提供快速即时竞赛消息<br/>
+              Copyright © 2022 &nbsp;&nbsp;&nbsp;&nbsp;
+              Powered by .React, Node.js </Footer>
         </Layout>
     )
 }
