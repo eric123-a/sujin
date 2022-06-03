@@ -1,0 +1,54 @@
+@startuml
+
+class 用户类{
+  -uid
+  -username
+  -password
+  -phone
+  +publishblog()
+  +editorblog()
+  +editorinfo()
+  +comment()
+  +sendmessage()
+  +getfriend()
+  +deletefriend()
+  +deletecollect()
+}
+博客类 <|-- 用户类
+评论类 <|-- 用户类
+收藏博客类 <|-- 用户类
+好友关系类 <|-- 用户类
+评论类 <|-- 博客类
+
+class 博客类{
+  -blogid
+  +content
+  -uid
+  +title
+  +tag
+  +getcommit()
+  +publish()
+  +editor()
+}
+
+class 收藏博客类{
+    -blogid
+    -uid
+    +delete()
+}
+
+class 评论类{
+    -commentid
+    -blogid
+    -uid
+    +content
+    +submit()
+}
+
+class "好友关系类"
+{
+    -uid
+    -friendid
+    +deletefriend()
+    +friendask()
+}

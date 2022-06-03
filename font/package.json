@@ -21,6 +21,9 @@
   },
   "dependencies": {
     "@ant-design/pro-layout": "^6.5.0",
+    "@babel/runtime-corejs3": "^7.18.3",
+    "@wangeditor/editor": "^5.1.1",
+    "@wangeditor/editor-for-react": "^1.0.3",
     "ahooks": "^3.3.10",
     "antd": "^4.20.1",
     "react": "17.x",

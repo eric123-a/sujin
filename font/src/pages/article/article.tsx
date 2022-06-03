@@ -1,18 +1,15 @@
 import styles from './article.less'
-
-// import { useRequest } from 'ahooks';
-// import { getBlogList } from '@/service/service';
-import React, {useEffect, useState} from 'react';
-import {history} from 'umi';
-import {UserOutlined, LaptopOutlined, NotificationOutlined} from '@ant-design/icons';
-import {Avatar, Comment, Divider, Calendar, List, MenuProps, Tooltip, Card} from "antd";
-import Sider from "antd/lib/layout/Sider";
-import {Layout, Menu, Breadcrumb} from 'antd';
+import React, { useEffect, useState } from 'react';
+import { UserOutlined, LaptopOutlined, NotificationOutlined } from '@ant-design/icons';
+import { Avatar, Comment, Divider, Calendar, List, MenuProps, Tooltip, Card } from "antd";
+import { Layout, Menu, Breadcrumb } from 'antd';
 import moment from 'moment';
-import type {CalendarMode} from 'antd/lib/calendar/generateCalendar';
-import type {Moment} from 'moment';
-import Icon, {HeartFilled, DislikeOutlined, LikeFilled, HomeOutlined} from '@ant-design/icons';
-
+import type { CalendarMode } from 'antd/lib/calendar/generateCalendar';
+import type { Moment } from 'moment';
+import Icon, { HeartFilled, DislikeOutlined, LikeFilled, HomeOutlined } from '@ant-design/icons';
+import { useLocation } from 'umi'
+import { getartcle, getcomment, publishcomment } from '@/service/service';
+import { Input } from 'antd';
 
 export default function ArticlePage() {
   // 日历相关
@@ -20,41 +17,26 @@ export default function ArticlePage() {
     console.log(value.format('YYYY-MM-DD'), mode);
   };
 
-  const {Header, Content, Footer, Sider} = Layout;
+  const { Header, Content, Footer, Sider } = Layout;
+  const { TextArea } = Input;
+  function useQuery() {
+    return new URLSearchParams(useLocation().search);
+  }
+  const query = useQuery();
 
-  // const [blogList, setblogList] = useState([]);
-  // const { loading, run } = useRequest(getBlogList, {
-  //   retryCount: 3,
-  //   manual: true,
-  //   onError: (error) => {
-  //     message.error(error.message);
-  //   },
-  //   onSuccess: (res) => {
-  //     console.log(res.data)
-  //     setblogList(res.data)
-  //   }
-  // });
-  // function selectTab(e) {
-  //   run({ tag: e })
-  // }
-  // useEffect(() => {
-  //   run({ tag: 'info' })
-  // }, [])
-  //
-  // function gotodetail(id) {
-  //   history.push({
-  //     pathname: '/detail',
-  //     query: {
-  //       blogId: id
-  //     }
-  //   })
-  // }
+  useEffect(() => {
+    getartcle({ blogId: query.get('blogId') }).then((res) => {
+      settitle(res.data[0].title)
+      setarticle(res.data[0].content)
+    })
+    getcomment({blogId:query.get('blogId')}).then(res=>{
+      setcomment(res.data)
+    })
+  }, [])
 
-  const title = '物联网大赛讯息';
-  const article = "“全国大学生物联网设计竞赛”是以促进国内物联网相关专业建设和人才培养为目标，以物联网技术为核心，激发物联网相关专业学生的创造、创新、创业活力，推动高校创新创业教育而举办的面向大学生的学科竞赛。在成功举办2014——2021年连续八届“全国大学生物联网设计竞赛”的基础上，竞赛组委会决定继续主办“2022年全国大学生物联网设计竞赛”(以下简称“竞赛”）。";
-
-  // 评论数据mock
-  const data = [
+  const [title, settitle] = useState('物联网大赛讯息')
+  const [article, setarticle] = useState('“全国大学生物联网设计竞赛”是以促进国内物联网相关专业建设和人才培养为目标，以物联网技术为核心，激发物联网相关专业学生的创造、创新、创业活力，推动高校创新创业教育而举办的面向大学生的学科竞赛。在成功举办2014——2021年连续八届“全国大学生物联网设计竞赛”的基础上，竞赛组委会决定继续主办“2022年全国大学生物联网设计竞赛”')
+  const [comment, setcomment] = useState([
     {
       actions: [<span key="comment-list-reply-to-0">Reply to</span>],
       author: 'Han Solo',
@@ -85,25 +67,40 @@ export default function ArticlePage() {
         </Tooltip>
       ),
     },
-  ];
+  ])
+  function submit(value) {
+    const data={
+      uid:sessionStorage.getItem('uid'),
+      blogId:query.get('blogId'),
+      content:value.target.value
+    }
+    console.log(data)
+      publishcomment(data).then((res)=>{
+        alert('发布成功')
+        window.location.reload()
+      })
+  }
+
+  // 评论数据mock
+
   return (
     <div className={styles.main}>
-      <Breadcrumb style={{paddingTop: '20px'}}>
+      <Breadcrumb style={{ paddingTop: '20px' }}>
         <Breadcrumb.Item href="">
-          <HomeOutlined/>
+          <HomeOutlined />
         </Breadcrumb.Item>
         <Breadcrumb.Item href="">
-          <UserOutlined/>
+          <UserOutlined />
           <span>竞赛讯息 列表</span>
         </Breadcrumb.Item>
         <Breadcrumb.Item>2022年度</Breadcrumb.Item>
       </Breadcrumb>
 
-      <Layout className="site-layout-background" style={{padding: '24px 0'}}>
+      <Layout className="site-layout-background" style={{ padding: '24px 0' }}>
         <Sider className="site-layout-background" width={300} theme={"light"}>
 
-          <Avatar shape="square" size={100} icon={<UserOutlined/>} className={styles.avatar}/>
-          <Card size={"small"} title="作者信息" bordered={false} style={{width: 300}}>
+          <Avatar shape="square" size={100} icon={<UserOutlined />} className={styles.avatar} />
+          <Card size={"small"} title="作者信息" bordered={false} style={{ width: 300 }}>
 
             <div className="site-card-border-less-wrapper">
               <p>昵称： content</p>
@@ -111,7 +108,7 @@ export default function ArticlePage() {
               <p>学校： whu</p></div>
           </Card>
           <div className={styles.calendar}>
-            <Calendar fullscreen={false} onPanelChange={onPanelChange}/>
+            <Calendar fullscreen={false} onPanelChange={onPanelChange} />
           </div>
         </Sider>
 
@@ -120,24 +117,23 @@ export default function ArticlePage() {
           {/*以下是帖子内容*/}
           <h1 className={styles.arttitle}>{title}</h1>
           <div className={styles.artinfo}>last edit time:xxxx-xx-xx xx:xx:xx</div>
+          <div dangerouslySetInnerHTML={{ __html: article }} />
 
-          <article>{article}</article>
-          <article>{article}</article>
-          <article>{article}</article>
+
           {/*帖子内容到这里结束*/}
 
           <Divider plain>喜欢这篇文章吗？可以赞或收藏哦~~</Divider>
           <div className={styles.actions}>
-            <LikeFilled style={{fontSize: '36px', color: '#08c', padding: '10px'}}/>
-            <DislikeOutlined style={{fontSize: '36px', padding: '10px'}}/>
-            <HeartFilled style={{fontSize: '36px', color: '#f8c', padding: '10px'}}/>
+            <LikeFilled style={{ fontSize: '36px', color: '#08c', padding: '10px' }} />
+            <DislikeOutlined style={{ fontSize: '36px', padding: '10px' }} />
+            <HeartFilled style={{ fontSize: '36px', color: '#f8c', padding: '10px' }} />
           </div>
           <Divider plain>评论区</Divider>
           <List
             className="comment-list"
-            header={`${data.length} replies`}
+            header={`${comment.length} replies`}
             itemLayout="horizontal"
-            dataSource={data}
+            dataSource={comment}
             renderItem={item => (
               <li>
                 <Comment
@@ -150,8 +146,9 @@ export default function ArticlePage() {
               </li>
             )}
           />
-
+          <TextArea rows={4} placeholder="评论" maxLength={6} onPressEnter={submit} />
         </Content>
+
       </Layout>
 
 

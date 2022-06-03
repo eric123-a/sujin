@@ -13,6 +13,8 @@ const config = require('./config')
 const userRouter = require('./router/user')
 const blogRouter = require('./router/blog')
 const commentRouter = require('./router/comment')
+const collectRouter = require('./router/collect')
+const friendRouter = require('./router/friend')
 //const { config } = require('./db')
 
 app.use(cors())
@@ -25,7 +27,10 @@ app.use('/api/user', userRouter)
 app.use('/api/blog', blogRouter)
 //comment路由
 app.use('/api/comment', commentRouter)
-
+//collect路由
+app.use('/api/collect', collectRouter)
+//friend路由
+app.use('/api/friend', friendRouter)
 /*app.use((err, req, res, next) => {
     res.cc = function (err, status = 1) {
         res.send({

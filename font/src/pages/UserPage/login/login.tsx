@@ -1,13 +1,18 @@
 import styles from './login.less'
-import {Form, Input, Button, Checkbox, Layout, Card} from 'antd';
-import {Link} from 'umi';
-import {Userlogin} from '@/service/service'
+import { Form, Input, Button, Checkbox, Layout, Card } from 'antd';
+import { Link, history } from 'umi';
+import { Userlogin } from '@/service/service'
 
-const {Header, Footer, Sider, Content} = Layout;
+const { Header, Footer, Sider, Content } = Layout;
 
 export default function login() {
   function login(data: any) {
-    Userlogin(data)
+    Userlogin(data).then((res) => {
+      console.log(res)
+      sessionStorage.setItem('token', res.token)
+      sessionStorage.setItem('uid', res.uid)
+      history.push('/')
+    })
   }
 
   return (
@@ -15,7 +20,7 @@ export default function login() {
 
     <Layout>
       <Sider theme={"light"} width={300}>
-        <Card title="关于速竞" extra={<a href="#">帮助</a>} style={{width: '300px', paddingTop:'30px'}}>
+        <Card title="关于速竞" extra={<a href="#">帮助</a>} style={{ width: '300px', paddingTop: '30px' }}>
           <h2>速竞：信息资源交流共享社区</h2>
           <h3>在这里你可以：</h3>
           <ul>
@@ -30,51 +35,51 @@ export default function login() {
       </Sider>
       <Content>
         <div className={styles.login}>
-      <Card title="登录" style={{width:'100%'}}>
+          <Card title="登录" style={{ width: '100%' }}>
 
-          <Form
-            name="basic"
-            labelCol={{span: 5}}
-            wrapperCol={{span: 10}}
-            initialValues={{remember: true}}
-            onFinish={login}
-            autoComplete="off"
-          >
-
-            <Form.Item
-              label="用户名"
-              name="username"
-              rules={[{required: true, message: 'Please input your account!'}]}
+            <Form
+              name="basic"
+              labelCol={{ span: 5 }}
+              wrapperCol={{ span: 10 }}
+              initialValues={{ remember: true }}
+              onFinish={login}
+              autoComplete="off"
             >
-              <Input/>
-            </Form.Item>
 
-            <Form.Item
-              label="密码"
-              name="password"
-              rules={[{required: true, message: 'Please input your password!'}]}
-            >
-              <Input.Password/>
-            </Form.Item>
+              <Form.Item
+                label="用户名"
+                name="username"
+                rules={[{ required: true, message: 'Please input your account!' }]}
+              >
+                <Input />
+              </Form.Item>
 
-            <Form.Item name="remember" valuePropName="checked" wrapperCol={{offset: 5, span: 10}}>
-              <Checkbox>记住密码</Checkbox>
-              <Link style={{float: 'right'}} to={'/'}>忘记密码？</Link>
-            </Form.Item>
+              <Form.Item
+                label="密码"
+                name="password"
+                rules={[{ required: true, message: 'Please input your password!' }]}
+              >
+                <Input.Password />
+              </Form.Item>
 
-            <Form.Item wrapperCol={{offset: 5, span: 10}}>
-              <Button type="primary" htmlType="submit" style={{width: '100%'}}>
-                登录
-              </Button>
-            </Form.Item>
+              <Form.Item name="remember" valuePropName="checked" wrapperCol={{ offset: 5, span: 10 }}>
+                <Checkbox>记住密码</Checkbox>
+                <Link style={{ float: 'right' }} to={'/'}>忘记密码？</Link>
+              </Form.Item>
 
-            <Form.Item wrapperCol={{offset: 5, span: 10}}>
-              <Link to={'/register'}>新用户注册</Link>
-            </Form.Item>
+              <Form.Item wrapperCol={{ offset: 5, span: 10 }}>
+                <Button type="primary" htmlType="submit" style={{ width: '100%' }}>
+                  登录
+                </Button>
+              </Form.Item>
+
+              <Form.Item wrapperCol={{ offset: 5, span: 10 }}>
+                <Link to={'/register'}>新用户注册</Link>
+              </Form.Item>
 
 
-          </Form>
-      </Card>
+            </Form>
+          </Card>
         </div>
       </Content>
 

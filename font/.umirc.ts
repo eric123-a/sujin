@@ -20,6 +20,7 @@ export default defineConfig({
         { exact: true, path: '/register', component: '@/pages/UserPage/register/register' },
         { exact: true, path: '/detail', component: '@/pages/detailPage/detail' },
         { exact: true, path: '/article', component: '@/pages/article/article' },
+        { exact: true, path: '/home', component: '@/pages/UserPage/home/index' },
       ],
     },
   ],

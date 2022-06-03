@@ -12,7 +12,7 @@ exports.filter = (req, res) => {
     if (filter.uid !== undefined) filtersql = filtersql + "and uid = '" + filter.uid + "' ";
 
     if (filter.blogId !== undefined) filtersql = filtersql + "and blogId = '" + filter.blogId + "' ";
-
+   
     db.query(filtersql, function (err, result) {
         if (err) return res.send(err)
 

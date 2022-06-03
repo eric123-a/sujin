@@ -1,11 +1,15 @@
 import styles from './register.less'
 import { Form, Input, Button, Checkbox } from 'antd';
-import { registerUser } from '@/service/service'
+import { registerUser } from '@/service/service';
+import { history } from 'umi';
 
 export default function register() {
     function register(data) {
-           console.log(data)
-          registerUser(data)
+        console.log(data)
+        registerUser(data).then(() => {
+            alert('注册成功')
+            history.push('/login')
+        })
     }
     return (
         <div className={styles.register}>

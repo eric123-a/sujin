@@ -38,7 +38,7 @@ export default function IndexPage() {
 
   function gotodetail(id) {
     history.push({
-      pathname: '/detail',
+      pathname: '/article',
       query: {
         blogId: id
       }
@@ -79,7 +79,7 @@ export default function IndexPage() {
               bordered
               dataSource={blogList}
               renderItem={item => (
-                <List.Item>
+                <List.Item onClick={() => gotodetail(item.blogId)}>
                   {item.title}
                 </List.Item>
               )}
@@ -90,7 +90,7 @@ export default function IndexPage() {
               bordered
               dataSource={blogList}
               renderItem={item => (
-                <List.Item>
+                <List.Item onClick={() => gotodetail(item.blogId)}>
                   {item.title}
                 </List.Item>
               )}
