@@ -2,8 +2,7 @@ import styles from './login.less'
 import { Form, Input, Button, Checkbox, Layout, Card } from 'antd';
 import { Link, history } from 'umi';
 import { Userlogin } from '@/service/service'
-
-const { Header, Footer, Sider, Content } = Layout;
+const { Sider, Content } = Layout;
 
 export default function login() {
   function login(data: any) {
