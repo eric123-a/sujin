@@ -1,4 +1,4 @@
-import { Button, Input } from "antd"
+import {Button, Card, Input, Layout} from "antd"
 import '@wangeditor/editor/dist/css/style.css'
 import React, { useState, useEffect } from 'react'
 import { Editor, Toolbar } from '@wangeditor/editor-for-react'
@@ -6,6 +6,7 @@ import { IDomEditor, IEditorConfig } from '@wangeditor/editor'
 import styles from './index.less'
 import { publish } from "@/service/service"
 import { Select } from 'antd';
+const { Sider, Content } = Layout;
 
 const { Option } = Select;
 
@@ -54,7 +55,23 @@ export default function home() {
         }
     }, [editor])
     return (
-        <div>
+      <Layout>
+        <Sider theme={"light"} width={300}>
+          <Card title="关于速竞" extra={<a href="#">帮助</a>} style={{ width: '300px', paddingTop: '30px' }}>
+            <h2>速竞：信息资源交流共享社区</h2>
+            <h3>在这里你可以：</h3>
+            <ul>
+              <li>交流竞赛经历</li>
+              <li>寻找备赛经验指南</li>
+              <li>个人简历</li>
+              <li>招募竞赛队友</li>
+              <li>获得最新竞赛咨询</li>
+              <li>分享自己的知识</li>
+            </ul>
+          </Card>
+        </Sider>
+        <Content>
+
             <div className={styles.main}>
                 <div className={styles.title}>
                     <Input placeholder="文章标题" bordered={false} onChange={(e) => settitle(e.target.value)}></Input>
@@ -64,12 +81,13 @@ export default function home() {
                         <Option value='info'>资讯</Option>
                     </Select>
                 </div>
-                <div>
+
+                <div className={styles.content}>
                     <Toolbar
                         editor={editor}
                         defaultConfig={toolbarConfig}
                         mode="default"
-                        style={{ borderBottom: '1px solid #ccc' }}
+                        style={{ borderBottom: '1px solid #ccc'}}
                     />
                     <Editor
                         defaultConfig={editorConfig}
@@ -82,6 +100,8 @@ export default function home() {
                     <div className={styles.btn}><Button onClick={submit} type='primary'>提交</Button></div>
                 </div>
             </div>
-        </div>
+        </Content>
+
+      </Layout>
     )
 }
